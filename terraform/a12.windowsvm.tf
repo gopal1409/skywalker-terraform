@@ -14,8 +14,8 @@ resource "azurerm_windows_virtual_machine" "web_vm" {
     azurerm_network_interface.web_nic.id
   ]
 
-  provision_vm_agent          = true
-  enable_automatic_updates    = true
+  provision_vm_agent       = true
+  enable_automatic_updates = true
 
   os_disk {
     caching              = "ReadWrite"

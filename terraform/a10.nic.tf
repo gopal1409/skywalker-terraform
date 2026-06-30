@@ -5,8 +5,8 @@
 #now i am creating a public ip to be attached with my nic 
 #we are ensuring that the public ip will be created first before nic is created
 resource "azurerm_network_interface" "web_nic" {
-    depends_on = [azurerm_public_ip.web_vm_publiip]
-   name                = "${local.resource_name_prefix}-nic"
+  depends_on          = [azurerm_public_ip.web_vm_publiip]
+  name                = "${local.resource_name_prefix}-nic"
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
 

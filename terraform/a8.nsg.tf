@@ -3,7 +3,7 @@ resource "azurerm_network_security_group" "web_nsg" {
   name                = "${local.resource_name_prefix}-nsg"
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
-  tags = local.project_lucky
+  tags                = local.project_lucky
 }
 
 #we want to attach the nsg with subnet
@@ -15,19 +15,19 @@ resource "azurerm_subnet_network_security_group_association" "web_nsg_associatio
 #i need to open 80 443 22
 #we need to open the port 80 for web traffic rule inside your nsg
 locals {
-    web_nsg_rule_inbound = { #named expression
-        "110" : "22" #web nsg rule is the name and it contains key value in priority and port number
-        "120" : "80"
-        "130" : "443"
-        "140" : "3389"
-      
-    }
+  web_nsg_rule_inbound = { #named expression
+    "110" : "22"           #web nsg rule is the name and it contains key value in priority and port number
+    "120" : "80"
+    "130" : "443"
+    "140" : "3389"
+
+  }
 }
 resource "azurerm_network_security_rule" "web_traffic" {
-    depends_on = [azurerm_network_security_group.web_nsg,azurerm_subnet_network_security_group_association.web_nsg_association]
-    for_each = local.web_nsg_rule_inbound
+  depends_on                  = [azurerm_network_security_group.web_nsg, azurerm_subnet_network_security_group_association.web_nsg_association]
+  for_each                    = local.web_nsg_rule_inbound
   name                        = "allow-web-traffic-${each.value}" #allow-web-traffic-22
-  priority                    = each.key #110
+  priority                    = each.key                          #110
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
