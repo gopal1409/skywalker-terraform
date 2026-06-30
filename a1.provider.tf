@@ -5,6 +5,12 @@ terraform {
       version = "=4.1.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "gopal-storage"
+    storage_account_name = "terraformstoragegopal"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 }
 
 # Configure the Microsoft Azure Provider
